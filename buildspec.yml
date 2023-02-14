@@ -5,16 +5,10 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - pip install -r requirements.txt
-      - pip install awsebcli
-  pre_build:
-    commands:
-      - echo "Building the application..."
-      - python setup.py build
   build:
     commands:
-      - echo "Deploying the application to Elastic Beanstalk..."
-      - eb init
-      - eb create
+      - echo "Building the application..."
+      - python app.py build
   # This is optional
   post_build:
     commands:
