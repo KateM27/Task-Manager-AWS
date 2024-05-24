@@ -1,14 +1,28 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <h1>To-Do List</h1>
-  <form action="/add" method="post">
-    <input type="text" name="todo">
-    <input type="submit" value="Add">
-  </form>
-  <ul>
-    {% for i, todo in enumerate(todos) %}
-      <li>{{ todo }} <a href="{{ url_for('delete', index=i) }}">Delete</a></li>
-    {% endfor %}
-  </ul>
-{% endblock %}
+<html>
+  <head>
+    <title>To-Do List</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    {% block content %}
+    <div class="container mt-5">
+      <h1 class="text-center">My To-Do List</h1>
+      <form action="{{ url_for('add') }}" method="POST" class="form-inline justify-content-center my-4">
+          <input type="text" name="todo" class="form-control mr-2" placeholder="Add a new task">
+          <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+      <ul class="list-group">
+          {% for todo in todos %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ todo }}
+                  <form action="{{ url_for('delete', todo_id=loop.index0) }}" method="POST" class="ml-2">
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                  </form>
+              </li>
+          {% endfor %}
+      </ul>
+  </div>
+    {% endblock %}
+  </body>
+</html>
